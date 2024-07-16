@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CardListService } from './pokemon-dashboard/services/card-list/card-list.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +7,4 @@ import { CardListService } from './pokemon-dashboard/services/card-list/card-lis
 })
 export class AppComponent {
   title = 'pokedex';
-  constructor(private cardListService: CardListService) {
-    this.cardListService.getCards(6).subscribe((cards) => {
-      console.log(cards);
-    });
-  }
 }

@@ -1,0 +1,59 @@
+<ng-container *ngIf="cards.length > 0">
+  <div class="search-bar">
+    <form [formGroup]="searchForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Select supertype</mat-label>
+        <mat-select formControlName="supertype">
+          <mat-option
+            *ngFor="let supertype of supertypes$ | async"
+            [value]="supertype"
+          >
+            {{ supertype }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types$ | async" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select subtype</mat-label>
+        <mat-select formControlName="subtype">
+          <mat-option
+            *ngFor="let subtype of subtypes$ | async"
+            [value]="subtype"
+          >
+            {{ subtype }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button (click)="filterCardList()">Filter</button>
+    </form>
+  </div>
+  <div class="card-list">
+    <mat-card
+      *ngFor="let card of cards"
+      (click)="selectCard(card)"
+      class="card"
+    >
+      <img
+        mat-card-image
+        src="{{ card.images.large }}"
+        alt="Photo of a pokemon"
+      />
+      <mat-card-actions align="end">
+        <button mat-button>More...</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="cards.length === 0">
+  <mat-spinner></mat-spinner>
+</ng-container>

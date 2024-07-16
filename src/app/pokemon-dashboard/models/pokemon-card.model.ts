@@ -141,3 +141,13 @@ export interface CardMarket {
     reverseHoloAvg30: number;
   };
 }
+
+export enum CardTypes {
+  supertypes = 'supertypes',
+  subtypes = 'subtypes',
+  types = 'types',
+}
+
+export interface PokemonCardTypesDTO {
+  data: string[];
+}
