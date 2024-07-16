@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
+import { catchError, map, Observable } from 'rxjs';
 import { PokemonCard, PokemonCardsDTO } from '../../models';
 import { environment } from 'src/environments/environment';
 
@@ -17,6 +21,12 @@ export class CardListService {
       .get<PokemonCardsDTO>(`${environment.apiUrl}/cards`, {
         params,
       })
-      .pipe(map((data: PokemonCardsDTO) => data.data));
+      .pipe(
+        map((data: PokemonCardsDTO) => data.data),
+        catchError((err: HttpErrorResponse) => {
+          throw 'Cards get error message: ' + err.message;
+          // TODO improve error handling / add error message for the user
+        })
+      );
   }
 }
