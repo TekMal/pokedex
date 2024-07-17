@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { PokemonDashboardRoutingModule } from './pokemon-dashboard-routing.module';
-import { PokemonListComponent } from './components/pokemon-list/pokemon-list/pokemon-list.component';
+import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PokemonDashboardComponent } from './components/pokemon-dashboard/pokemon-dashboard.component';
 import { CardDialogComponent } from './components/card-dialog/card-dialog.component';

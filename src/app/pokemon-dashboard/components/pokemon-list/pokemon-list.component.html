@@ -1,0 +1,9 @@
+<mat-card *ngFor="let card of cards" (click)="selectCard(card)" class="card">
+  <img mat-card-image src="{{ card.images.small }}" alt="Photo of a pokemon" />
+  <mat-card-actions align="end">
+    <button mat-button (click)="openCardDialog(card)">More...</button>
+  </mat-card-actions>
+</mat-card>
+<ng-container *ngIf="showNoDataDisclaimer$ | async">
+  <p>There are no matching cards</p>
+</ng-container>

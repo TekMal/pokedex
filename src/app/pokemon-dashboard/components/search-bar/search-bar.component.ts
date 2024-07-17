@@ -33,12 +33,12 @@ export class SearchBarComponent {
     });
   }
 
-  filterCardList() {
+  filterCardList(): void {
     const { supertype, type, subtype } = this.searchForm?.getRawValue();
     this.cardListFilterService.filterCachedData(supertype, type, subtype);
   }
 
-  resetForm() {
+  resetForm(): void {
     this.searchForm.reset();
     this.cardListService.cardList = this.initStateCards;
   }
