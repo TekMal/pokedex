@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { catchError, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import {
   CardTypes,
   PokemonCard,
@@ -12,39 +12,61 @@ import {
   PokemonCardTypesDTO,
 } from '../../models';
 import { environment } from 'src/environments/environment';
+import { CacheService } from '../cache/cache.service';
+
+const CARD_AMOUNT = 20;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CardListService {
-  constructor(private http: HttpClient) {}
+  cardListSubject = new BehaviorSubject<PokemonCard[] | null>(null);
 
-  getCards(cardsAmount: number): Observable<PokemonCard[]> {
-    const params = new HttpParams().set('pageSize', cardsAmount);
+  constructor(private http: HttpClient, private cacheService: CacheService) {}
 
-    return this.http
-      .get<PokemonCardsDTO>(`${environment.apiUrl}/cards`, {
-        params,
-      })
-      .pipe(
-        map((data: PokemonCardsDTO) => data.data),
-        catchError((err: HttpErrorResponse) => {
-          throw 'Cards get error message: ' + err.message;
-          // TODO improve error handling / add error message for the user
+  getCards(): Observable<PokemonCard[]> {
+    const cachedCards = this.cacheService.cachedCardList;
+    console.log(cachedCards);
+
+    if (cachedCards) {
+      return of(cachedCards);
+    } else {
+      const params = new HttpParams().set('pageSize', CARD_AMOUNT);
+
+      return this.http
+        .get<PokemonCardsDTO>(`${environment.apiUrl}/cards`, {
+          params,
         })
-      );
+        .pipe(
+          map((data: PokemonCardsDTO) => data.data),
+          tap((data: PokemonCard[]) => {
+            this.cardList = data;
+            this.cacheService.cardListCache = data;
+          }),
+          catchError((err: HttpErrorResponse) => {
+            throw 'Cards get error message: ' + err.message;
+            // TODO improve error handling / add error message for the user
+          })
+        );
+    }
   }
 
-  // typeOfType <3
-
-  getCardTypes(typeOfType: CardTypes): Observable<string[]> {
+  getCardTypes(typeOfCardTypes: CardTypes): Observable<string[]> {
     return this.http
-      .get<PokemonCardTypesDTO>(`${environment.apiUrl}/${typeOfType}`, {})
+      .get<PokemonCardTypesDTO>(`${environment.apiUrl}/${typeOfCardTypes}`, {})
       .pipe(
         map((data: PokemonCardTypesDTO) => data.data),
         catchError((err: HttpErrorResponse) => {
           throw 'Cards types get error message: ' + err.message;
         })
       );
+  }
+
+  get cardList$(): Observable<PokemonCard[] | null> {
+    return this.cardListSubject.asObservable();
+  }
+
+  set cardList(value: PokemonCard[] | null) {
+    this.cardListSubject.next(value);
   }
 }

@@ -1,9 +1,12 @@
-<ng-container *ngIf="cards.length > 0">
+<ng-container *ngIf="cards$ | async">
   <div class="search-bar">
     <form [formGroup]="searchForm">
       <mat-form-field appearance="fill">
         <mat-label>Select supertype</mat-label>
         <mat-select formControlName="supertype">
+          <mat-option [value]="null">
+            {{ "-" }}
+          </mat-option>
           <mat-option
             *ngFor="let supertype of supertypes$ | async"
             [value]="supertype"
@@ -16,6 +19,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Select type</mat-label>
         <mat-select formControlName="type">
+          <mat-option [value]="null">
+            {{ "-" }}
+          </mat-option>
           <mat-option *ngFor="let type of types$ | async" [value]="type">
             {{ type }}
           </mat-option>
@@ -25,6 +31,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Select subtype</mat-label>
         <mat-select formControlName="subtype">
+          <mat-option [value]="null">
+            {{ "-" }}
+          </mat-option>
           <mat-option
             *ngFor="let subtype of subtypes$ | async"
             [value]="subtype"
@@ -34,26 +43,30 @@
         </mat-select>
       </mat-form-field>
       <button mat-raised-button (click)="filterCardList()">Filter</button>
+      <button mat-raised-button (click)="resetForm()">Clear filters</button>
     </form>
   </div>
   <div class="card-list">
     <mat-card
-      *ngFor="let card of cards"
+      *ngFor="let card of cards$ | async"
       (click)="selectCard(card)"
       class="card"
     >
       <img
         mat-card-image
-        src="{{ card.images.large }}"
+        src="{{ card.images.small }}"
         alt="Photo of a pokemon"
       />
       <mat-card-actions align="end">
         <button mat-button>More...</button>
       </mat-card-actions>
     </mat-card>
+    <ng-container *ngIf="showNoDataDisclaimer$ | async">
+      <p>There are no matching cards</p>
+    </ng-container>
   </div>
 </ng-container>
 
-<ng-container *ngIf="cards.length === 0">
+<ng-container *ngIf="!(cards$ | async)">
   <mat-spinner></mat-spinner>
 </ng-container>
