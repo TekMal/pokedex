@@ -68,6 +68,5 @@ export class CardService {
       this.cardListService.cardList = updatedCardList;
       this.cacheService.cardListCache = updatedCardList;
     }
-    console.log(updatedCardList);
   }
 }

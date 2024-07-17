@@ -1,0 +1,44 @@
+<div class="search-bar">
+  <form [formGroup]="searchForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Select supertype</mat-label>
+      <mat-select formControlName="supertype">
+        <mat-option [value]="null">
+          {{ "-" }}
+        </mat-option>
+        <mat-option
+          *ngFor="let supertype of supertypes$ | async"
+          [value]="supertype"
+        >
+          {{ supertype }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option [value]="null">
+          {{ "-" }}
+        </mat-option>
+        <mat-option *ngFor="let type of types$ | async" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select subtype</mat-label>
+      <mat-select formControlName="subtype">
+        <mat-option [value]="null">
+          {{ "-" }}
+        </mat-option>
+        <mat-option *ngFor="let subtype of subtypes$ | async" [value]="subtype">
+          {{ subtype }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="filterCardList()">Filter</button>
+    <button mat-raised-button (click)="resetForm()">Clear filters</button>
+  </form>
+</div>

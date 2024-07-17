@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PokemonDashboardComponent } from './components/pokemon-dashboard/pokemon-dashboard.component';
 import { CardDialogComponent } from './components/card-dialog/card-dialog.component';
 import { EditCardDialogComponent } from './components/edit-card-dialog/edit-card-dialog.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 const materialModules = [
   MatCardModule,
@@ -32,6 +33,7 @@ const materialModules = [
     PokemonDashboardComponent,
     CardDialogComponent,
     EditCardDialogComponent,
+    SearchBarComponent,
   ],
   imports: [
     CommonModule,
