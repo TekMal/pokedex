@@ -58,7 +58,7 @@
         alt="Photo of a pokemon"
       />
       <mat-card-actions align="end">
-        <button mat-button>More...</button>
+        <button mat-button (click)="openCardDialog(card)">More...</button>
       </mat-card-actions>
     </mat-card>
     <ng-container *ngIf="showNoDataDisclaimer$ | async">

@@ -14,7 +14,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { CacheService } from '../cache/cache.service';
 
-const CARD_AMOUNT = 20;
+const CARD_AMOUNT = 40;
 
 @Injectable({
   providedIn: 'root',
@@ -52,14 +52,27 @@ export class CardListService {
   }
 
   getCardTypes(typeOfCardTypes: CardTypes): Observable<string[]> {
-    return this.http
-      .get<PokemonCardTypesDTO>(`${environment.apiUrl}/${typeOfCardTypes}`, {})
-      .pipe(
-        map((data: PokemonCardTypesDTO) => data.data),
-        catchError((err: HttpErrorResponse) => {
-          throw 'Cards types get error message: ' + err.message;
-        })
-      );
+    const cachedCardType =
+      this.cacheService.getCachedCardTypes(typeOfCardTypes);
+
+    if (cachedCardType) {
+      return of(cachedCardType);
+    } else {
+      return this.http
+        .get<PokemonCardTypesDTO>(
+          `${environment.apiUrl}/${typeOfCardTypes}`,
+          {}
+        )
+        .pipe(
+          map((data: PokemonCardTypesDTO) => data.data),
+          tap((data: string[]) => {
+            this.cacheService.setCardTypesCache(typeOfCardTypes, data);
+          }),
+          catchError((err: HttpErrorResponse) => {
+            throw 'Cards types get error message: ' + err.message;
+          })
+        );
+    }
   }
 
   get cardList$(): Observable<PokemonCard[] | null> {

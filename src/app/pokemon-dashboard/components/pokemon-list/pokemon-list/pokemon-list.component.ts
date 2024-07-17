@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import {
   CardFilters,
   CardTypes,
@@ -9,7 +10,9 @@ import {
   CacheService,
   CardListFilterService,
   CardListService,
+  CardService,
 } from 'src/app/pokemon-dashboard/services';
+import { CardDialogComponent } from '../../card-dialog/card-dialog.component';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -30,7 +33,9 @@ export class PokemonListComponent implements OnInit, OnDestroy {
   constructor(
     private cardListService: CardListService,
     private cardListFilterService: CardListFilterService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private cardService: CardService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -68,5 +73,18 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.cacheService.clearcache();
+  }
+
+  openCardDialog(card: PokemonCard) {
+    const similarCards$ = this.cardService.getSimilarCards(card);
+    const dialogRef = this.dialog.open(CardDialogComponent, {
+      width: '50%',
+      autoFocus: false,
+      data: { card, similarCards$ },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
