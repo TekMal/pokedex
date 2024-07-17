@@ -1,41 +1,68 @@
-<form [formGroup]="editForm">
-  <mat-form-field appearance="fill">
-    <mat-label>Select supertype</mat-label>
-    <mat-select formControlName="supertype">
-      <mat-option [value]="null">
-        {{ "-" }}
-      </mat-option>
-      <mat-option
-        *ngFor="let supertype of supertypes$ | async"
-        [value]="supertype"
-      >
-        {{ supertype }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editForm">
+    <div class="edit-form-field">
+      <p>Change supertype</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Select supertype</mat-label>
+        <mat-select formControlName="supertype">
+          <mat-option
+            *ngFor="let supertype of supertypes$ | async"
+            [value]="supertype"
+          >
+            {{ supertype }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Select type</mat-label>
-    <mat-select formControlName="type">
-      <mat-option [value]="null">
-        {{ "-" }}
-      </mat-option>
-      <mat-option *ngFor="let type of types$ | async" [value]="type">
-        {{ type }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="edit-form-field">
+      <p>Change type</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Select type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types$ | async" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Select subtype</mat-label>
-    <mat-select formControlName="subtype">
-      <mat-option [value]="null">
-        {{ "-" }}
-      </mat-option>
-      <mat-option *ngFor="let subtype of subtypes$ | async" [value]="subtype">
-        {{ subtype }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-raised-button (click)="editCard()">Edit</button>
-</form>
+    <div class="edit-form-field">
+      <p>Change subtype</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Select subtype</mat-label>
+        <mat-select formControlName="subtype">
+          <mat-option
+            *ngFor="let subtype of subtypes$ | async"
+            [value]="subtype"
+          >
+            {{ subtype }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="edit-form-field">
+      <p>Change hit point</p>
+      <mat-form-field class="input-form-field">
+        <mat-label>Hit points</mat-label>
+        <input
+          matInput
+          placeholder="{{ data.card.hp }}"
+          type="text"
+          formControlName="hitPoints"
+          (keypress)="isItNumber($event)"
+          (focus)="onFocus()"
+        />
+        <mat-hint *ngIf="isNumberHintVisible"
+          ><strong>Only numbers</strong>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)="editCard()">Apply changes</button>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

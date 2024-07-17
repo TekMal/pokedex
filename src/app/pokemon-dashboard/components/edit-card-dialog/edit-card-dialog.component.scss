@@ -1,0 +1,20 @@
+:host {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
+  button {
+    margin-left: 10px;
+  }
+}
+
+mat-form-field {
+  margin: 0 8px;
+  width: 200px;
+}
+
+.edit-form-field {
+  display: flex;
+  justify-content: space-between;
+}

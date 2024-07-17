@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { filter, map, Observable, tap } from 'rxjs';
-import { CardListService } from '..';
-import { CardTypes, PokemonCard } from '../../models';
+import { map, Observable } from 'rxjs';
+import { CacheService, CardListService } from '..';
+import { PokemonCard } from '../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,10 @@ import { CardTypes, PokemonCard } from '../../models';
 export class CardService {
   cards$ = this.cardListService.cardList$;
 
-  constructor(private cardListService: CardListService) {}
+  constructor(
+    private cardListService: CardListService,
+    private cacheService: CacheService
+  ) {}
 
   getSimilarCards(card: PokemonCard): Observable<PokemonCard[] | null> {
     return this.cards$.pipe(
@@ -35,5 +38,36 @@ export class CardService {
     } else {
       return null;
     }
+  }
+
+  editCard(
+    cardId: string,
+    changes: {
+      supertype: string;
+      type: string;
+      subtype: string;
+      hitPoints: string;
+    }
+  ) {
+    // TODO refactor list of card object to object => [cardId: string]: {...cardData}
+    const { supertype, type, subtype, hitPoints } = changes;
+    const updatedCardList = this.cacheService.cachedCardList?.map(
+      (card: PokemonCard) => {
+        if (card.id === cardId) {
+          return {
+            ...card,
+            supertype,
+            types: [type],
+            subtypes: [subtype],
+            hp: hitPoints,
+          };
+        } else return card;
+      }
+    );
+    if (updatedCardList) {
+      this.cardListService.cardList = updatedCardList;
+      this.cacheService.cardListCache = updatedCardList;
+    }
+    console.log(updatedCardList);
   }
 }

@@ -14,13 +14,13 @@ import {
 import { environment } from 'src/environments/environment';
 import { CacheService } from '../cache/cache.service';
 
-const CARD_AMOUNT = 40;
+const CARD_AMOUNT = 2;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CardListService {
-  cardListSubject = new BehaviorSubject<PokemonCard[] | null>(null);
+  cardListSubject = new BehaviorSubject<PokemonCard[]>([]);
 
   constructor(private http: HttpClient, private cacheService: CacheService) {}
 
@@ -75,11 +75,11 @@ export class CardListService {
     }
   }
 
-  get cardList$(): Observable<PokemonCard[] | null> {
+  get cardList$(): Observable<PokemonCard[]> {
     return this.cardListSubject.asObservable();
   }
 
-  set cardList(value: PokemonCard[] | null) {
+  set cardList(value: PokemonCard[]) {
     this.cardListSubject.next(value);
   }
 }

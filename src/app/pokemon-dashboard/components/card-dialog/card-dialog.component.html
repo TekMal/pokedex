@@ -13,7 +13,8 @@
     </div>
   </div>
 
-  <ng-container *ngIf="data.similarCards$ | async">
+  <ng-container *ngIf="(data.similarCards$ | async)?.length">
+    <p>{{ data.similarCards$ | async }}</p>
     <h1>Similar Cards</h1>
     <div class="similar-cards-list">
       <mat-card *ngFor="let card of data.similarCards$ | async" class="card">

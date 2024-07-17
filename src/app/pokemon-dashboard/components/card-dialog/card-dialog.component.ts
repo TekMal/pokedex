@@ -37,11 +37,15 @@ export class CardDialogComponent {
   }
 
   openEditCardDialog(card: PokemonCard) {
-    this.dialog.open(EditCardDialogComponent, {
+    const editDialogRef = this.dialog.open(EditCardDialogComponent, {
       width: '50%',
-      height: '50%',
       autoFocus: false,
       data: { card },
+    });
+    editDialogRef.afterClosed().subscribe((changed: boolean) => {
+      if (changed) {
+        this.dialogRef.close();
+      }
     });
   }
 }
