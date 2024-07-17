@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+
 import { CacheService, CardListService } from '..';
 import { PokemonCard } from '../../models';
 
@@ -48,7 +49,7 @@ export class CardService {
       subtype: string;
       hitPoints: string;
     }
-  ) {
+  ): void {
     // TODO refactor list of card object to object => [cardId: string]: {...cardData}
     const { supertype, type, subtype, hitPoints } = changes;
     const updatedCardList = this.cacheService.cachedCardList?.map(
@@ -67,6 +68,8 @@ export class CardService {
     if (updatedCardList) {
       this.cardListService.cardList = updatedCardList;
       this.cacheService.cardListCache = updatedCardList;
+    } else {
+      console.log('Error during card update');
     }
   }
 }

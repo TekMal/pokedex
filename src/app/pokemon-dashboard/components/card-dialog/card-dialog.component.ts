@@ -5,6 +5,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+
 import { PokemonCard } from '../../models';
 import { CardService } from '../../services';
 import { EditCardDialogComponent } from '../edit-card-dialog/edit-card-dialog.component';
@@ -26,7 +27,7 @@ export class CardDialogComponent {
     private cardService: CardService
   ) {}
 
-  openCardDialog(card: PokemonCard) {
+  openCardDialog(card: PokemonCard): void {
     const similarCards$ = this.cardService.getSimilarCards(card);
     this.dialogRef.close();
     this.dialog.open(CardDialogComponent, {
@@ -36,7 +37,7 @@ export class CardDialogComponent {
     });
   }
 
-  openEditCardDialog(card: PokemonCard) {
+  openEditCardDialog(card: PokemonCard): void {
     const editDialogRef = this.dialog.open(EditCardDialogComponent, {
       width: '50%',
       autoFocus: false,

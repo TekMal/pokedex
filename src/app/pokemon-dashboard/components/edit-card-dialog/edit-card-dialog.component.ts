@@ -5,6 +5,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+
 import { CardTypes, PokemonCard } from '../../models';
 import { CardListService, CardService } from '../../services';
 
@@ -45,7 +46,7 @@ export class EditCardDialogComponent {
     private cardListService: CardListService
   ) {}
 
-  editCard() {
+  editCard(): void {
     const { supertype, type, subtype, hitPoints } =
       this.editForm?.getRawValue();
     this.cardService.editCard(this.data.card.id, {

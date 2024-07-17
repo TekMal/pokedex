@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+
 import { PokemonCard } from '../../models';
 import { CacheService } from '../cache/cache.service';
 import { CardListService } from '../card-list/card-list.service';
@@ -18,7 +19,7 @@ export class CardListFilterService {
     supertype: string | null,
     type: string | null,
     subtype: string | null
-  ) {
+  ): void {
     const filteredCardArray = this.cacheService.cachedCardList?.filter(
       (card: PokemonCard) => {
         return (

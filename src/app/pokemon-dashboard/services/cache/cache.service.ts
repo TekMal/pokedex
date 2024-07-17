@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
 import { CardTypes, PokemonCard } from '../../models';
 
 @Injectable({
@@ -14,20 +15,20 @@ export class CacheService {
 
   cachedCardsList = new BehaviorSubject<PokemonCard[] | null>(null);
 
-  setCardTypesCache(typeKey: CardTypes, typesList: string[]): void {
-    this.cachedCardTypes[typeKey].next(typesList);
-  }
-
-  getCachedCardTypes(typeKey: CardTypes): string[] | null {
-    return this.cachedCardTypes[typeKey].value;
-  }
-
   set cardListCache(givenCardsList: PokemonCard[]) {
     this.cachedCardsList.next(givenCardsList);
   }
 
   get cachedCardList(): PokemonCard[] | null {
     return this.cachedCardsList.value;
+  }
+
+  setCardTypesCache(typeKey: CardTypes, typesList: string[]): void {
+    this.cachedCardTypes[typeKey].next(typesList);
+  }
+
+  getCachedCardTypes(typeKey: CardTypes): string[] | null {
+    return this.cachedCardTypes[typeKey].value;
   }
 
   clearcache(): void {

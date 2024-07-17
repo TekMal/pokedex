@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-//import { BlackHoleComponent } from './black-hole/black-hole.component';
 
 const routes: Routes = [
   {
@@ -10,7 +9,10 @@ const routes: Routes = [
         (m) => m.PokemonDashboardModule
       ),
   },
-  //  { path: '**', component: BlackHoleComponent },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+
 import { PokemonCard } from 'src/app/pokemon-dashboard/models';
 import {
   CardListFilterService,
@@ -28,7 +29,7 @@ export class PokemonListComponent {
     this.selectedCard = card;
   }
 
-  openCardDialog(card: PokemonCard) {
+  openCardDialog(card: PokemonCard): void {
     const similarCards$ = this.cardService.getSimilarCards(card);
     this.dialog.open(CardDialogComponent, {
       width: '50%',

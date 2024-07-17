@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+
 import { PokemonCard } from '../../models';
-import {
-  CacheService,
-  CardListFilterService,
-  CardListService,
-  CardService,
-} from '../../services';
+import { CacheService, CardListService } from '../../services';
 
 @Component({
   selector: 'app-pokemon-dashboard',

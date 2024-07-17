@@ -5,13 +5,14 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 import {
   CardTypes,
   PokemonCard,
   PokemonCardsDTO,
   PokemonCardTypesDTO,
 } from '../../models';
-import { environment } from 'src/environments/environment';
 import { CacheService } from '../cache/cache.service';
 
 const CARD_AMOUNT = 50;
