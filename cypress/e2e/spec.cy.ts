@@ -1,4 +1,9 @@
 describe('Set of basic tests', () => {
+  it('All cards are loaded', () => {
+    cy.visit('http://localhost:4200');
+    cy.get('mat-card').should('have.length', 50);
+  });
+
   it('No filter result', () => {
     cy.visit('http://localhost:4200');
     cy.get('mat-select[formControlName=supertype]')
