@@ -7,3 +7,10 @@ export interface CardFilters {
   subtype: StringFormControl;
   type: StringFormControl;
 }
+
+export interface CardEdit {
+  supertypeEdit: StringFormControl;
+  subtypeEdit: StringFormControl;
+  typeEdit: StringFormControl;
+  hitPointsEdit: StringFormControl;
+}

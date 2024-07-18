@@ -6,7 +6,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 
-import { CardTypes, PokemonCard } from '../../models';
+import { CardEdit, CardTypes, PokemonCard } from '../../models';
 import { CardListService, CardService } from '../../services';
 
 @Component({
@@ -20,24 +20,7 @@ export class EditCardDialogComponent {
   types$ = this.cardListService.getCardTypes(CardTypes.types);
 
   isNumberHintVisible = false;
-  editForm = new FormGroup({
-    supertypeEdit: new FormControl<string>(
-      this.data.card.supertype,
-      Validators.required
-    ),
-    subtypeEdit: new FormControl<string>(
-      this.data.card.subtypes[0],
-      Validators.required
-    ),
-    typeEdit: new FormControl<string>(
-      this.data.card.types[0],
-      Validators.required
-    ),
-    hitPointsEdit: new FormControl<string>(
-      this.data.card.hp,
-      Validators.required
-    ),
-  });
+  editForm = this.initEditForm();
 
   // TODO handle null and init data in form controls
 
@@ -77,5 +60,26 @@ export class EditCardDialogComponent {
   isEventNotNumberOrEnter(event: KeyboardEvent): boolean {
     const { key } = event;
     return !/[0-9]/.test(key) && key !== 'Enter';
+  }
+
+  initEditForm(): FormGroup<CardEdit> {
+    return new FormGroup({
+      supertypeEdit: new FormControl<string>(
+        this.data.card.supertype,
+        Validators.required
+      ),
+      subtypeEdit: new FormControl<string>(
+        this.data.card.subtypes[0],
+        Validators.required
+      ),
+      typeEdit: new FormControl<string>(
+        this.data.card.types[0],
+        Validators.required
+      ),
+      hitPointsEdit: new FormControl<string>(
+        this.data.card.hp,
+        Validators.required
+      ),
+    });
   }
 }

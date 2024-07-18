@@ -11,7 +11,7 @@ import { CardListFilterService, CardListService } from '../../services';
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent {
-  searchForm: FormGroup<CardFilters> = this.initForm();
+  searchForm: FormGroup<CardFilters> = this.initSearchForm();
 
   supertypes$ = this.cardListService.getCardTypes(CardTypes.supertypes);
   subtypes$ = this.cardListService.getCardTypes(CardTypes.subtypes);
@@ -23,7 +23,7 @@ export class SearchBarComponent {
     public dialog: MatDialog
   ) {}
 
-  initForm(): FormGroup<CardFilters> {
+  initSearchForm(): FormGroup<CardFilters> {
     return new FormGroup({
       supertype: new FormControl<string | null>(null),
       subtype: new FormControl<string | null>(null),

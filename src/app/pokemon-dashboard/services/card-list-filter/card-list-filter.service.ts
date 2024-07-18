@@ -24,8 +24,8 @@ export class CardListFilterService {
       (card: PokemonCard) => {
         return (
           (!supertype ? !supertype : card.supertype === supertype) &&
-          this.checkArrayParametr(card.types, type) &&
-          this.checkArrayParametr(card.subtypes, subtype)
+          this.typesTableContainsElement(card.types, type) &&
+          this.typesTableContainsElement(card.subtypes, subtype)
         );
       }
     );
@@ -35,8 +35,11 @@ export class CardListFilterService {
     }
   }
 
-  checkArrayParametr(arra: string[], parametr: string | null): boolean {
-    return !parametr ? !parametr : arra.includes(parametr);
+  typesTableContainsElement(
+    typesTable: string[],
+    element: string | null
+  ): boolean {
+    return !element ? !element : typesTable.includes(element);
   }
 
   get showNoDataDisclaimer(): Observable<boolean> {
