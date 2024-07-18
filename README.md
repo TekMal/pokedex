@@ -10,7 +10,7 @@ Run `npm install` to install all required dependencies.
 
 ### Create config file
 
-Before running the application, you need to create an environment file to store your API key. This file should be named `environment.ts` and placed in the root `/pokedex/src/environments`. An example file named `environment.example.ts` is provided in the template to help you get started.
+Before running the application, you need to create an environment file to store your API key. This file should be named `environment.ts` and placed in the root `/pokedex/src/environments`. An example file named `environment.example.ts` is provided as a template to help you get started.
 
 ## Development server
 
@@ -30,7 +30,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `npm run cy:open` to execute the end-to-end tests via cypress.
+Run `npm run cy:open` to execute the end-to-end tests via Cypress.
 
 ## Further help
 

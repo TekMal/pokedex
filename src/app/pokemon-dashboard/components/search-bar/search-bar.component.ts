@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CardFilters, CardTypes, PokemonCard } from '../../models';
+import { CardFilters, CardTypes } from '../../models';
 import { CardListFilterService, CardListService } from '../../services';
 
 @Component({
@@ -11,8 +11,6 @@ import { CardListFilterService, CardListService } from '../../services';
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent {
-  @Input() initStateCards: PokemonCard[] = [];
-
   searchForm: FormGroup<CardFilters> = this.initForm();
 
   supertypes$ = this.cardListService.getCardTypes(CardTypes.supertypes);
@@ -40,6 +38,6 @@ export class SearchBarComponent {
 
   resetForm(): void {
     this.searchForm.reset();
-    this.cardListService.cardList = this.initStateCards;
+    this.cardListFilterService.filterCachedData(null, null, null);
   }
 }

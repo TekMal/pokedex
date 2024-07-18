@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PokemonCard } from '../../models';
 import { CacheService, CardListService } from '../../services';
 
 @Component({
@@ -9,7 +8,6 @@ import { CacheService, CardListService } from '../../services';
   styleUrls: ['./pokemon-dashboard.component.scss'],
 })
 export class PokemonDashboardComponent implements OnInit {
-  initStateCards: PokemonCard[] = [];
   cards$ = this.cardListService.cardList$;
 
   constructor(
@@ -22,9 +20,7 @@ export class PokemonDashboardComponent implements OnInit {
   }
 
   loadCards(): void {
-    this.cardListService.getCards().subscribe((cards) => {
-      this.initStateCards = cards;
-    });
+    this.cardListService.getCards().subscribe();
   }
 
   ngOnDestroy(): void {
