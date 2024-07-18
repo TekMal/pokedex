@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { CacheService, CardListService } from '../../services';
 
@@ -9,6 +10,7 @@ import { CacheService, CardListService } from '../../services';
 })
 export class PokemonDashboardComponent implements OnInit {
   cards$ = this.cardListService.cardList$;
+  subscription = new Subscription();
 
   constructor(
     private cardListService: CardListService,
@@ -20,10 +22,12 @@ export class PokemonDashboardComponent implements OnInit {
   }
 
   loadCards(): void {
-    this.cardListService.getCards().subscribe();
+    this.subscription = this.cardListService.getCards().subscribe();
+    // TODO add pagination or load more btn
   }
 
   ngOnDestroy(): void {
+    this.subscription.unsubscribe();
     this.cacheService.clearcache();
   }
 }
