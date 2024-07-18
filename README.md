@@ -1,6 +1,16 @@
 # Pokedex
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.3.
+This project is built using [Angular 15.0.3](https://v15.angular.io/docs) and leverages [Angular Material 15.2.9](https://v15.material.angular.io/) for UI components. End-to-end (E2E) testing is implemented using [Cypress 13.13.0](https://docs.cypress.io/guides/overview/why-cypress). The application uses the [Pokémon TCG API](https://docs.pokemontcg.io/) to retrieve data related to Pokémon Trading Card Game.
+
+## Configuration
+
+### Install Dependencies:
+
+Run `npm install` to install all required dependencies.
+
+### Create config file
+
+Before running the application, you need to create an environment file to store your API key. This file should be named `environment.ts` and placed in the root `/pokedex/src/environments`. An example file named `environment.example.ts` is provided in the template to help you get started.
 
 ## Development server
 
@@ -20,7 +30,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `npm run cy:open` to execute the end-to-end tests via cypress.
 
 ## Further help
 
