@@ -1,0 +1,22 @@
+:host {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  min-width: 200px;
+  margin: 20px;
+  padding: 10px;
+}
+
+img {
+  max-width: 200px;
+}
+
+.mdc-card__actions {
+  padding: 0;
+}

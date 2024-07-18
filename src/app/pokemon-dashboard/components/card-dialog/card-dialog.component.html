@@ -1,0 +1,35 @@
+<mat-dialog-content class="mat-typography">
+  <div class="pokemon-info">
+    <div class="pokemon-info__content">
+      <h1>Info</h1>
+      <p>Name: {{ data.card.name }}</p>
+      <p>Hit points: {{ data.card.hp }}</p>
+      <p>Supertype: {{ data.card.supertype }}</p>
+      <p>Types: {{ data.card.types }}</p>
+      <p>Subtype: {{ data.card.subtypes }}</p>
+    </div>
+    <div class="pokemon-info__action">
+      <button mat-button (click)="openEditCardDialog(data.card)">Edit</button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="(data.similarCards$ | async)?.length">
+    <h1>Similar Cards</h1>
+    <div class="similar-cards-list">
+      <mat-card *ngFor="let card of data.similarCards$ | async" class="card">
+        <img
+          mat-card-image
+          src="{{ card.images.small }}"
+          alt="Photo of a pokemon"
+        />
+        <mat-card-actions align="end">
+          <button mat-button (click)="openCardDialog(card)">More...</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

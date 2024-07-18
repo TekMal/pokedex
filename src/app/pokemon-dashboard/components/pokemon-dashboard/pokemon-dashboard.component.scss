@@ -1,0 +1,19 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar {
+  height: 10%;
+  width: 100%;
+  box-shadow: -1px -3px 28px -7px rgba(66, 68, 90, 0.44);
+}
+
+.card-list {
+  height: 90%;
+  width: 100%;
+}
