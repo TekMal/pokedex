@@ -1,7 +1,7 @@
 describe('Set of basic tests', () => {
-  it('All cards are loaded', () => {
+  it('All cards on first page are loaded', () => {
     cy.visit('http://localhost:4200');
-    cy.get('mat-card').should('have.length', 50);
+    cy.get('mat-card').should('have.length', 20);
   });
 
   it('No filter result', () => {
