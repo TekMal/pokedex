@@ -1,11 +1,8 @@
-<ng-container *ngIf="cards$ | async">
+<ng-container *ngIf="loaded$ | async">
   <app-search-bar class="search-bar"></app-search-bar>
-  <app-pokemon-list
-    class="card-list"
-    [cards]="cards$ | async"
-  ></app-pokemon-list>
+  <app-pokemon-list class="card-list"></app-pokemon-list>
 </ng-container>
 
-<ng-container *ngIf="!(cards$ | async)">
+<ng-container *ngIf="isLoading$ | async">
   <mat-spinner></mat-spinner>
 </ng-container>

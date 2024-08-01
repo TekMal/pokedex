@@ -1,10 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 
 import { PokemonCard } from 'src/app/pokemon-dashboard/models';
 import {
   CardListFilterService,
+  CardListService,
   CardService,
+  PAGE_SIZE,
+  PaginationService,
 } from 'src/app/pokemon-dashboard/services';
 import { CardDialogComponent } from '../card-dialog/card-dialog.component';
 
@@ -14,20 +18,20 @@ import { CardDialogComponent } from '../card-dialog/card-dialog.component';
   styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent {
-  @Input() cards: PokemonCard[] | null = null;
+  cardListPageData$ = this.paginationService.getCardListPageData$();
 
-  selectedCard: PokemonCard | null = null;
   showNoDataDisclaimer$ = this.cardListFilterService.showNoDataDisclaimer;
+  totalItems$ = this.cardListService.cardListLenght$;
+  currentPage$ = this.paginationService.currentPage$;
+  pageSize = PAGE_SIZE;
 
   constructor(
     private cardListFilterService: CardListFilterService,
     private cardService: CardService,
+    private cardListService: CardListService,
+    private paginationService: PaginationService,
     public dialog: MatDialog
   ) {}
-
-  selectCard(card: PokemonCard): void {
-    this.selectedCard = card;
-  }
 
   openCardDialog(card: PokemonCard): void {
     const similarCards$ = this.cardService.getSimilarCards(card);
@@ -36,5 +40,10 @@ export class PokemonListComponent {
       autoFocus: false,
       data: { card, similarCards$ },
     });
+  }
+
+  pageChanged(event: PageEvent) {
+    this.paginationService.currentPage = event.pageIndex;
+    this.cardListPageData$ = this.paginationService.getCardListPageData$();
   }
 }

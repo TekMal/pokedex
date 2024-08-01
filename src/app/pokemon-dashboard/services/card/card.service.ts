@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-
 import { CacheService, CardListService } from '..';
 import { PokemonCard } from '../../models';
 

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
 
-import { CacheService, CardListService } from '../../services';
+import {
+  CacheService,
+  CardListFilterService,
+  CardListService,
+} from '../../services';
 
 @Component({
   selector: 'app-pokemon-dashboard',
@@ -10,11 +14,19 @@ import { CacheService, CardListService } from '../../services';
 })
 export class PokemonDashboardComponent implements OnInit {
   cards$ = this.cardListService.cardList$;
-  subscription = new Subscription();
+  showNoDataDisclaimer$ = this.cardListFilterService.showNoDataDisclaimer;
+
+  isLoading$ = combineLatest([this.cards$, this.showNoDataDisclaimer$]).pipe(
+    map(([cardList, showDisclaimer]) => !cardList.length && !showDisclaimer)
+  );
+  loaded$ = combineLatest([this.cards$, this.showNoDataDisclaimer$]).pipe(
+    map(([cardList, showDisclaimer]) => cardList.length || showDisclaimer)
+  );
 
   constructor(
     private cardListService: CardListService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private cardListFilterService: CardListFilterService
   ) {}
 
   ngOnInit(): void {
@@ -22,12 +34,10 @@ export class PokemonDashboardComponent implements OnInit {
   }
 
   loadCards(): void {
-    this.subscription = this.cardListService.getCards().subscribe();
-    // TODO add pagination or load more btn
+    this.cardListService.getCards().subscribe();
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
     this.cacheService.clearcache();
   }
 }

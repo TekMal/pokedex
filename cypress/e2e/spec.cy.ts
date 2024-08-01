@@ -30,13 +30,13 @@ describe('Set of basic tests', () => {
 
   it('Open details dialog', () => {
     cy.visit('http://localhost:4200');
-    cy.get('#button-1').click();
+    cy.get('#card-1').click();
     cy.get('.mat-mdc-dialog-container').should('exist');
   });
 
   it('Close details dialog', () => {
     cy.visit('http://localhost:4200');
-    cy.get('#button-1').click();
+    cy.get('#card-1').click();
     cy.get('.mat-mdc-dialog-container').should('exist');
     cy.contains('Close').click();
     cy.get('.mat-mdc-dialog-container').should('not.exist');
@@ -44,19 +44,19 @@ describe('Set of basic tests', () => {
 
   it('Edit hit points', () => {
     cy.visit('http://localhost:4200');
-    cy.get('#button-1').click();
+    cy.get('#card-1').click();
     cy.get('.mat-mdc-dialog-container').should('exist');
     cy.contains('Hit points: 50');
     cy.contains('Edit').click();
     cy.get('input[formControlName=hitPointsEdit]').clear().type('100');
     cy.contains('Apply changes').click();
-    cy.get('#button-1').click();
+    cy.get('#card-1').click();
     cy.contains('Hit points: 100');
   });
 
   it('Show only number hint during card edit', () => {
     cy.visit('http://localhost:4200');
-    cy.get('#button-1').click();
+    cy.get('#card-1').click();
     cy.get('.mat-mdc-dialog-container').should('exist');
     cy.contains('Hit points: 50');
     cy.contains('Edit').click();

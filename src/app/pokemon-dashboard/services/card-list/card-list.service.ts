@@ -15,13 +15,13 @@ import {
 } from '../../models';
 import { CacheService } from '../cache/cache.service';
 
-const CARD_AMOUNT = 50;
+export const CARD_AMOUNT = 200;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CardListService {
-  cardListSubject = new BehaviorSubject<PokemonCard[] | null>(null);
+  cardListSubject = new BehaviorSubject<PokemonCard[]>([]);
 
   constructor(private http: HttpClient, private cacheService: CacheService) {}
 
@@ -45,7 +45,6 @@ export class CardListService {
           }),
           catchError((err: HttpErrorResponse) => {
             throw 'Cards get error message: ' + err.message;
-            // TODO improve error handling / add error message for the user
           })
         );
     }
@@ -75,11 +74,15 @@ export class CardListService {
     }
   }
 
-  get cardList$(): Observable<PokemonCard[] | null> {
+  get cardList$(): Observable<PokemonCard[]> {
     return this.cardListSubject.asObservable();
   }
 
   set cardList(value: PokemonCard[]) {
     this.cardListSubject.next(value);
+  }
+
+  get cardListLenght$(): Observable<number> {
+    return this.cardList$.pipe(map((cardList) => cardList.length));
   }
 }
