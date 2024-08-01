@@ -3,7 +3,7 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { PokemonCard } from '../../models';
 import { CardListService } from '../card-list/card-list.service';
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 20;
 
 @Injectable({
   providedIn: 'root',

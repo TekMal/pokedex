@@ -16,15 +16,16 @@
   <ng-container *ngIf="(data.similarCards$ | async)?.length">
     <h1>Similar Cards</h1>
     <div class="similar-cards-list">
-      <mat-card *ngFor="let card of data.similarCards$ | async" class="card">
+      <mat-card
+        *ngFor="let card of data.similarCards$ | async"
+        (click)="openCardDialog(card)"
+        class="card"
+      >
         <img
           mat-card-image
           src="{{ card.images.small }}"
           alt="Photo of a pokemon"
         />
-        <mat-card-actions align="end">
-          <button mat-button (click)="openCardDialog(card)">More...</button>
-        </mat-card-actions>
       </mat-card>
     </div>
   </ng-container>

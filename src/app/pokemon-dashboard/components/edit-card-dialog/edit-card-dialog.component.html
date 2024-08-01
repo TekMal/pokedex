@@ -51,10 +51,8 @@
           placeholder="{{ data.card.hp }}"
           type="text"
           formControlName="hitPointsEdit"
-          (keypress)="isItNumber($event)"
-          (focus)="onFocus()"
         />
-        <mat-hint *ngIf="isNumberHintVisible"
+        <mat-hint *ngIf="editForm.get('hitPointsEdit')?.hasError('pattern')"
           ><strong>Only numbers</strong>
         </mat-hint>
       </mat-form-field>

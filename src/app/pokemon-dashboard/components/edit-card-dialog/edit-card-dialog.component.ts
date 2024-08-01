@@ -19,10 +19,7 @@ export class EditCardDialogComponent {
   subtypes$ = this.cardListService.getCardTypes(CardTypes.subtypes);
   types$ = this.cardListService.getCardTypes(CardTypes.types);
 
-  isNumberHintVisible = false;
   editForm = this.initEditForm();
-
-  // TODO handle null and init data in form controls
 
   constructor(
     public dialogRef: MatDialogRef<EditCardDialogComponent>,
@@ -36,30 +33,18 @@ export class EditCardDialogComponent {
   ) {}
 
   editCard(): void {
-    const { supertypeEdit, typeEdit, subtypeEdit, hitPointsEdit } =
-      this.editForm?.getRawValue();
-    const { supertype, types, subtypes, hp, id } = this.data.card;
-    this.cardService.editCard(id, {
-      supertype: supertypeEdit ? supertypeEdit : supertype,
-      type: typeEdit ? typeEdit : types[0],
-      subtype: subtypeEdit ? subtypeEdit : subtypes[0],
-      hitPoints: hitPointsEdit ? hitPointsEdit : hp,
-    });
-    this.dialogRef.close(true);
-  }
-
-  isItNumber(event: KeyboardEvent): boolean {
-    this.isNumberHintVisible = this.isEventNotNumberOrEnter(event);
-    return !this.isNumberHintVisible;
-  }
-
-  onFocus(): void {
-    this.isNumberHintVisible = false;
-  }
-
-  isEventNotNumberOrEnter(event: KeyboardEvent): boolean {
-    const { key } = event;
-    return !/[0-9]/.test(key) && key !== 'Enter';
+    if (this.editForm.valid) {
+      const { supertypeEdit, typeEdit, subtypeEdit, hitPointsEdit } =
+        this.editForm?.getRawValue();
+      const { supertype, types, subtypes, hp, id } = this.data.card;
+      this.cardService.editCard(id, {
+        supertype: supertypeEdit ? supertypeEdit : supertype,
+        type: typeEdit ? typeEdit : types[0],
+        subtype: subtypeEdit ? subtypeEdit : subtypes[0],
+        hitPoints: hitPointsEdit ? hitPointsEdit : hp,
+      });
+      this.dialogRef.close(true);
+    }
   }
 
   initEditForm(): FormGroup<CardEdit> {
@@ -76,10 +61,10 @@ export class EditCardDialogComponent {
         this.data.card.types[0],
         Validators.required
       ),
-      hitPointsEdit: new FormControl<string>(
-        this.data.card.hp,
-        Validators.required
-      ),
+      hitPointsEdit: new FormControl<string>(this.data.card.hp, [
+        Validators.required,
+        Validators.pattern('[0-9]+'),
+      ]),
     });
   }
 }
